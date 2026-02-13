@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TERMINAL // ACCESS GRANTED</title>
+    <title>TERMINAL // ACCESS_GRANTED</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=VT323&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,26 +12,21 @@
             --vhs-purple: #8a2be2;
             --dark-void: #050505;
             --neon-green: #39ff14;
+            --daft-gold: #ffcc00;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body, html {
             background: var(--dark-void);
-            /* FONDO COMBINADO: Imagen de Stranger Things con capa de oscuridad */
-            background-image: 
-                linear-gradient(rgba(5, 5, 5, 0.8), rgba(5, 5, 5, 0.8)),
-                url('stranger-bg.jpg'); 
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
             color: #fff;
             font-family: 'Rajdhani', sans-serif;
             overflow-x: hidden;
             width: 100%;
+            height: 100%;
         }
 
-        /* --- PANTALLA DE INICIO (OVERLAY) --- */
+        /* --- PANTALLA DE INICIO --- */
         #overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -41,20 +36,22 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: 1s ease-out;
+            transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         .access-btn {
-            padding: 20px 40px;
+            padding: 15px 30px;
             background: transparent;
             border: 2px solid var(--st-red);
             color: var(--st-red);
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             letter-spacing: 5px;
             text-transform: uppercase;
             box-shadow: 0 0 15px var(--st-red);
+            cursor: pointer;
             transition: 0.3s;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
         }
 
         .access-btn:hover {
@@ -63,100 +60,87 @@
             box-shadow: 0 0 50px var(--st-red);
         }
 
-        /* --- FILTRO CRT/VHS --- */
-        .crt-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 3px, 3px 100%;
-            z-index: 1000;
-            pointer-events: none;
-            opacity: 0.3;
-        }
-
+        /* --- FONDO ANIMADO Y VHS --- */
         #particles-js {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-        }
-
-        header {
-            padding: 80px 20px;
-            text-align: center;
-            position: relative;
-        }
-
-        .glitch {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2.5rem, 8vw, 6rem);
-            font-weight: 900;
-            color: var(--st-red);
-            text-transform: uppercase;
-            position: relative;
-            text-shadow: 0.05em 0 0 rgba(255,0,0,.75),
-                        -0.025em -0.05em 0 rgba(0,255,255,.75),
-                        0.025em 0.05em 0 rgba(255,0,255,.75);
-            animation: glitch 500ms infinite;
-        }
-
-        /* --- TERMINAL CON LOGO DAFT PUNK --- */
-        .terminal-container {
-            max-width: 900px;
-            margin: 0 auto 50px;
-            padding: 30px;
-            background: rgba(10, 10, 10, 0.85); /* Un poco más transparente */
-            border: 1px solid #444;
-            border-top: 25px solid #222;
-            box-shadow: 0 0 40px rgba(255, 0, 0, 0.2);
-            position: relative;
-            backdrop-filter: blur(5px);
-        }
-
-        /* LOGO DAFT PUNK COMO SELLO */
-        .daft-logo {
-            position: absolute;
-            top: -60px;
-            right: 20px;
-            width: 120px;
-            height: 120px;
-            background-image: url('daft-punk.jpg');
+            background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('stranger-bg.jpg');
             background-size: cover;
             background-position: center;
-            border-radius: 50%;
-            border: 3px solid var(--st-red);
-            box-shadow: 0 0 20px var(--st-red);
-            z-index: 10;
-            animation: float 3s ease-in-out infinite;
         }
 
-        @keyframes float {
+        .crt-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 3px 100%;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 40px 10px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .glitch-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 10vw, 5rem);
+            font-weight: 900;
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 2px 2px var(--st-red), -2px -2px var(--cyber-blue);
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { opacity: 0.8; transform: scale(1); }
+            to { opacity: 1; transform: scale(1.02); }
+        }
+
+        /* --- CONTENEDOR TIPO TERMINAL --- */
+        .terminal-wrap {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto 100px;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 30px solid #1a1a1a;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            position: relative;
+            padding: 20px;
+        }
+
+        .daft-seal {
+            position: absolute;
+            top: -65px;
+            right: 10px;
+            width: 100px;
+            height: 100px;
+            background: url('daft-punk.jpg') center/cover;
+            border-radius: 50%;
+            border: 2px solid var(--st-red);
+            box-shadow: 0 0 20px var(--st-red);
+            animation: spin-float 6s infinite ease-in-out;
+        }
+
+        @keyframes spin-float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-10px) rotate(5deg); }
         }
 
-        .terminal-container::before {
-            content: "SYSTEM_ACCESS_GRANTED";
-            position: absolute;
-            top: -22px; left: 10px;
-            color: #666; font-family: 'VT323'; font-size: 14px;
-        }
-
-        .terminal-header {
-            font-family: 'VT323', monospace;
-            color: var(--neon-green);
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-        }
-
         #message-box {
             font-family: 'VT323', monospace;
-            font-size: 1.6rem;
-            line-height: 1.4;
+            font-size: clamp(1.2rem, 4vw, 1.6rem);
+            line-height: 1.5;
             color: #efefef;
-            min-height: 300px;
+            text-align: justify;
         }
 
         .cursor {
@@ -166,107 +150,88 @@
             animation: blink 0.8s infinite;
         }
 
-        /* --- LUCES DE JOYCE --- */
-        .neon-lights {
-            display: flex;
-            justify-content: space-around;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-
-        .light {
-            width: 20px; height: 20px;
-            border-radius: 50%;
-            filter: blur(2px);
-            animation: pulse-light 1s infinite alternate;
-        }
-
-        .l1 { background: var(--st-red); box-shadow: 0 0 20px var(--st-red); animation-delay: 0.1s; }
-        .l2 { background: var(--cyber-blue); box-shadow: 0 0 20px var(--cyber-blue); animation-delay: 0.3s; }
-        .l3 { background: var(--vhs-purple); box-shadow: 0 0 20px var(--vhs-purple); animation-delay: 0.5s; }
-        .l4 { background: var(--neon-green); box-shadow: 0 0 20px var(--neon-green); animation-delay: 0.7s; }
-
-        /* --- PLAYER MP3 --- */
-        .player-interface {
+        /* --- PLAYER MP3 (MOBILE FRIENDLY) --- */
+        .player-bar {
             position: fixed;
-            bottom: 20px; right: 20px;
-            background: rgba(17, 17, 17, 0.9);
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(5, 5, 5, 0.95);
+            border-top: 2px solid var(--st-red);
             padding: 15px;
-            border-left: 5px solid var(--st-red);
-            width: 280px;
-            z-index: 1001;
-            box-shadow: -10px 10px 20px rgba(0,0,0,0.5);
-            border: 1px solid #333;
-        }
-
-        .visualizer-sim {
             display: flex;
-            gap: 3px; height: 30px; align-items: flex-end; margin-bottom: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            z-index: 1001;
         }
 
-        .bar { width: 5px; background: var(--st-red); animation: bar-dance 1s infinite; }
-
-        @keyframes glitch {
-            0% { text-shadow: 0.05em 0 0 rgba(255,0,0,.75); }
-            14% { text-shadow: 0.05em 0 0 rgba(255,0,0,.75), -0.05em -0.025em 0 rgba(0,255,255,.75); }
-            15% { text-shadow: -0.05em -0.025em 0 rgba(0,255,255,.75), 0.025em 0.05em 0 rgba(255,0,255,.75); }
-            49% { text-shadow: -0.05em -0.025em 0 rgba(0,255,255,.75), 0.025em 0.05em 0 rgba(255,0,255,.75); }
-            50% { text-shadow: 0.025em 0.05em 0 rgba(255,0,255,.75), 0.05em 0 0 rgba(0,255,0,.75); }
-            100% { text-shadow: -0.025em 0 0 rgba(255,0,0,.75), -0.025em -0.025em 0 rgba(0,255,255,.75); }
+        .visualizer {
+            display: flex;
+            gap: 3px;
+            height: 30px;
+            align-items: flex-end;
         }
 
+        .bar { width: 4px; background: var(--st-red); animation: dance 1s infinite alternate; }
+        @keyframes dance { from { height: 5px; } to { height: 30px; } }
+
+        audio { 
+            max-width: 100%; 
+            height: 30px; 
+            filter: invert(1) brightness(1.5); 
+        }
+
+        /* --- ANIMACIONES ADICIONALES --- */
         @keyframes blink { 50% { opacity: 0; } }
-        @keyframes pulse-light { from { opacity: 0.4; transform: scale(0.8); } to { opacity: 1; transform: scale(1.2); } }
-        @keyframes bar-dance { 0%, 100% { height: 5px; } 50% { height: 25px; } }
+        
+        .hidden { display: none !important; opacity: 0; }
 
-        audio { width: 100%; filter: invert(1); height: 30px; margin-top: 10px; }
-        .hidden { display: none !important; }
-        footer { text-align: center; padding: 40px; font-family: 'VT323'; color: #444; font-size: 1.2rem; }
+        footer { text-align: center; padding: 20px; color: #444; font-size: 0.8rem; margin-bottom: 80px; }
 
+        /* --- MEDIA QUERIES --- */
+        @media (max-width: 600px) {
+            .terminal-wrap { width: 95%; padding: 15px; border-top-width: 20px; }
+            .daft-seal { width: 70px; height: 70px; top: -50px; }
+            .player-bar { padding: 10px; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- Pantalla de Entrada -->
     <div id="overlay">
-        <h2 style="font-family: 'Orbitron'; margin-bottom: 20px; letter-spacing: 5px; color: #fff;">ENCRYPTED FILE</h2>
-        <button class="access-btn" onclick="startExperience()">Descifrar Mensaje</button>
-        <p style="margin-top: 20px; color: #444; font-size: 0.8rem;">RECOMENDADO: USAR AURICULARES</p>
+        <div style="font-family: 'Orbitron'; color: #fff; margin-bottom: 20px; font-size: 0.8rem; letter-spacing: 5px;">
+            ENCRYPTED_MESSAGE_DETECTION
+        </div>
+        <button class="access-btn" onclick="start()">DESCIFRAR</button>
     </div>
 
     <div class="crt-overlay"></div>
     <div id="particles-js"></div>
 
     <header>
-        <h1 class="glitch">EXTRAORDINARY</h1>
-        <p style="letter-spacing: 10px; color: var(--cyber-blue);">SUBJECT: 011 // THE DARK SECTOR</p>
+        <h1 class="glitch-title">EXTRAORDINARY</h1>
+        <p style="color: var(--cyber-blue); letter-spacing: 5px; font-size: 0.8rem;">SUBJECT: 011 // DAFT_PUNK_PROTOCOL</p>
     </header>
 
-    <div class="neon-lights">
-        <div class="light l1"></div><div class="light l2"></div><div class="light l3"></div><div class="light l4"></div>
-        <div class="light l1"></div><div class="light l2"></div><div class="light l3"></div><div class="light l4"></div>
-    </div>
-
-    <main class="terminal-container">
-        <!-- LOGO DAFT PUNK -->
-        <div class="daft-logo"></div>
-        
-        <div class="terminal-header">
-            > HAWKINS_LABS_DATABASE LOGIN: OK<br>
-            > DECRYPTING_MESSAGE... COMPLETED<br>
-            > SOURCE: UNKNOWN // TARGET: YOU
-        </div>
-        <div id="message-box"></div><span class="cursor"></span>
+    <main class="terminal-wrap">
+        <div class="daft-seal"></div>
+        <div id="message-box"></div><span class="cursor" id="cursor"></span>
     </main>
 
-    <div class="player-interface">
-        <div class="visualizer-sim">
+    <!-- Reproductor Inferior -->
+    <div class="player-bar">
+        <div class="visualizer">
             <div class="bar" style="animation-delay: 0.1s"></div>
-            <div class="bar" style="animation-delay: 0.4s"></div>
-            <div class="bar" style="animation-delay: 0.2s"></div>
-            <div class="bar" style="animation-delay: 0.6s"></div>
             <div class="bar" style="animation-delay: 0.3s"></div>
             <div class="bar" style="animation-delay: 0.5s"></div>
-            <div style="margin-left: 10px; font-size: 0.7rem; font-family: 'Orbitron';">I FEEL IT COMING - DAFT PUNK</div>
+            <div class="bar" style="animation-delay: 0.2s"></div>
+            <div class="bar" style="animation-delay: 0.4s"></div>
+        </div>
+        <div style="font-family: 'Orbitron'; font-size: 0.7rem; color: var(--daft-gold);">
+            NOW PLAYING: I FEEL IT COMING - DAFT PUNK
         </div>
         <audio id="bgMusic" loop>
             <source src="ifeelitcoming.mp3" type="audio/mpeg">
@@ -274,12 +239,12 @@
     </div>
 
     <footer>
-        -- NO MORE EXPERIMENTS -- SYSTEM OVERRIDE BY DAFT_PUNK --
+        HAWKINS LABS // 1984-2024 // ALL RIGHTS RESERVED
     </footer>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        const text = `Quiero que te tomes un momento para leer esto y entenderlo bien: eres una persona extraordinaria. No lo digo por decirlo, lo digo porque lo he visto, lo he sentido y lo he comprobado. Eres increíblemente inteligente, tienes una mente ágil, analítica y capaz de resolver cosas que para otros parecen imposibles. Pero lo más impresionante no es solo tu inteligencia, sino la manera en que la usas, con humildad, con empatía y con ganas de crecer siempre un poco más.
+        const message = `Quiero que te tomes un momento para leer esto y entenderlo bien: eres una persona extraordinaria. No lo digo por decirlo, lo digo porque lo he visto, lo he sentido y lo he comprobado. Eres increíblemente inteligente, tienes una mente ágil, analítica y capaz de resolver cosas que para otros parecen imposibles. Pero lo más impresionante no es solo tu inteligencia, sino la manera en que la usas, con humildad, con empatía y con ganas de crecer siempre un poco más.
 
 Eres muy capaz de todo lo que te propongas. Cuando te enfocas en algo, lo haces con determinación, con disciplina y con esa fuerza silenciosa que te caracteriza. A veces puede que dudes de ti mismo, pero desde afuera se nota todo el potencial que tienes. Tienes talento, tienes visión y tienes esa mentalidad que distingue a las personas que realmente llegan lejos.
 
@@ -291,36 +256,42 @@ Nunca dejes de luchar por tus sueños. Nunca permitas que el miedo, el cansancio
 
 Confía más en ti. Cree más en tu capacidad. Recuerda que eres mucho más fuerte y mucho más capaz de lo que a veces imaginas.`;
 
-        function typeWriter(text, i, fnCallback) {
+        function typeWriter(text, i) {
             if (i < text.length) {
-                document.getElementById("message-box").innerHTML = text.substring(0, i+1);
-                setTimeout(function() {
-                    typeWriter(text, i + 1, fnCallback)
-                }, 30);
+                document.getElementById("message-box").innerHTML = text.substring(0, i + 1);
+                setTimeout(() => typeWriter(text, i + 1), 35);
             }
         }
 
-        function startExperience() {
+        function start() {
             document.getElementById('overlay').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('overlay').classList.add('hidden');
                 document.getElementById('bgMusic').play();
-                typeWriter(text, 0);
+                typeWriter(message, 0);
             }, 1000);
         }
 
+        // Partículas tipo "Mundo del Revés"
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
                 "color": { "value": "#ff0000" },
                 "shape": { "type": "circle" },
-                "opacity": { "value": 0.5, "random": true },
+                "opacity": { "value": 0.3, "random": true },
                 "size": { "value": 2, "random": true },
                 "line_linked": { "enable": false },
-                "move": { "enable": true, "speed": 1.5, "direction": "top", "random": true, "out_mode": "out" }
+                "move": { "enable": true, "speed": 1.2, "direction": "top", "random": true, "out_mode": "out" }
             }
         });
+
+        // Efecto Rayo Rojo Ocasional
+        setInterval(() => {
+            if(Math.random() > 0.8) {
+                document.body.style.backgroundColor = "rgba(255, 0, 0, 0.05)";
+                setTimeout(() => { document.body.style.backgroundColor = "transparent"; }, 50);
+            }
+        }, 3000);
     </script>
 </body>
 </html>
-```
