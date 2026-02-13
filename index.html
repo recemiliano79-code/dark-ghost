@@ -3,293 +3,312 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRANSMISSION: EXTRAORDINARY</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Special+Elite&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <title>TERMINAL // ACCESS GRANTED</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=VT323&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --st-red: #ff0000;
             --cyber-blue: #00f2ff;
-            --punk-pink: #ff007f;
-            --dark-void: #0a0a0a;
+            --vhs-purple: #8a2be2;
+            --dark-void: #050505;
+            --neon-green: #39ff14;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
 
-        body {
-            background-color: var(--dark-void);
+        body, html {
+            background: var(--dark-void);
             color: #fff;
             font-family: 'Rajdhani', sans-serif;
             overflow-x: hidden;
-            height: 100%;
+            width: 100%;
         }
 
-        /* --- EFECTO CRT Y RUIDO --- */
-        body::before {
-            content: " ";
-            position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 100;
-            background-size: 100% 4px, 3px 100%;
-            pointer-events: none;
-        }
-
-        body::after {
-            content: "";
+        /* --- PANTALLA DE INICIO (OVERLAY) --- */
+        #overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 10, 10, 0.1);
-            opacity: 0.1;
-            z-index: 99;
-            pointer-events: none;
-            animation: grain 0.5s steps(1) infinite;
-        }
-
-        @keyframes grain {
-            0%, 100% { transform: translate(0, 0); }
-            10% { transform: translate(-5%, -5%); }
-            30% { transform: translate(5%, 5%); }
-            50% { transform: translate(-5%, 5%); }
-            70% { transform: translate(5%, -5%); }
-        }
-
-        /* --- FONDO ANIMADO --- */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at center, #1a0505 0%, #050505 100%);
-        }
-
-        /* --- HEADER --- */
-        header {
-            height: 100vh;
+            background: #000;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 20px;
+            z-index: 9999;
+            transition: 1s ease-out;
         }
 
-        .glitch-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(3rem, 10vw, 7rem);
-            font-weight: 900;
-            text-transform: uppercase;
-            color: var(--st-red);
-            text-shadow: 0 0 20px var(--st-red), 0 0 40px #500;
-            position: relative;
-            animation: pulse-glow 2s infinite alternate;
-        }
-
-        @keyframes pulse-glow {
-            from { text-shadow: 0 0 10px var(--st-red); opacity: 0.8; }
-            to { text-shadow: 0 0 30px var(--st-red), 0 0 10px var(--cyber-blue); opacity: 1; }
-        }
-
-        .subtitle {
-            font-family: 'Special Elite', cursive;
-            color: var(--cyber-blue);
-            letter-spacing: 5px;
-            font-size: 1.2rem;
-            margin-top: 10px;
-            opacity: 0.7;
-        }
-
-        /* --- PLAYER --- */
-        .player-box {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid var(--st-red);
-            padding: 20px;
-            width: 320px;
-            margin: -100px auto 100px;
-            position: relative;
-            z-index: 10;
-            box-shadow: 0 0 15px var(--st-red);
-            clip-path: polygon(0% 15%, 15% 0%, 100% 0%, 100% 85%, 85% 100%, 0% 100%);
-        }
-
-        .player-box h4 {
-            font-size: 0.7rem;
-            color: var(--cyber-blue);
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        audio {
-            width: 100%;
-            filter: invert(1) brightness(1.5) hue-rotate(180deg);
-        }
-
-        /* --- MENSAJE PRINCIPAL --- */
-        .main-container {
-            max-width: 900px;
-            margin: 0 auto 100px;
-            padding: 50px;
-            background: rgba(5, 5, 5, 0.9);
-            border: 1px solid #333;
-            position: relative;
-            z-index: 5;
-            transition: 0.5s;
-        }
-
-        .main-container::before {
-            content: "";
-            position: absolute;
-            top: -5px; left: -5px;
-            width: 30px; height: 30px;
-            border-top: 3px solid var(--st-red);
-            border-left: 3px solid var(--st-red);
-        }
-
-        .main-container::after {
-            content: "";
-            position: absolute;
-            bottom: -5px; right: -5px;
-            width: 30px; height: 30px;
-            border-bottom: 3px solid var(--st-red);
-            border-right: 3px solid var(--st-red);
-        }
-
-        .text-block {
-            font-family: 'Special Elite', cursive;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #ddd;
-            text-align: justify;
-        }
-
-        .text-block span.strong {
-            color: var(--st-red);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: bold;
-            text-shadow: 0 0 5px var(--st-red);
-        }
-
-        /* --- ANIMACIONES DE SCROLL --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: 1s all ease;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- BOTON EXTRA PUNK --- */
-        .punk-btn {
-            display: block;
-            width: fit-content;
-            margin: 40px auto;
-            padding: 15px 30px;
-            border: 1px solid var(--cyber-blue);
-            color: var(--cyber-blue);
-            text-decoration: none;
-            font-family: 'Orbitron', sans-serif;
-            text-transform: uppercase;
+        .access-btn {
+            padding: 20px 40px;
             background: transparent;
-            position: relative;
-            overflow: hidden;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-
-        .punk-btn:hover {
-            background: var(--cyber-blue);
-            color: #000;
-            box-shadow: 0 0 20px var(--cyber-blue);
-        }
-
-        footer {
-            text-align: center;
-            padding: 50px;
+            border: 2px solid var(--st-red);
+            color: var(--st-red);
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.7rem;
-            color: #333;
+            font-size: 1.5rem;
             letter-spacing: 5px;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px var(--st-red);
+            transition: 0.3s;
         }
+
+        .access-btn:hover {
+            background: var(--st-red);
+            color: #000;
+            box-shadow: 0 0 50px var(--st-red);
+        }
+
+        /* --- FILTRO CRT/VHS --- */
+        .crt-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 3px, 3px 100%;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        /* --- ANIMACIÓN DE FONDO (UPSIDE DOWN) --- */
+        #particles-js {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .glitch {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 900;
+            color: var(--st-red);
+            text-transform: uppercase;
+            position: relative;
+            text-shadow: 0.05em 0 0 rgba(255,0,0,.75),
+                        -0.025em -0.05em 0 rgba(0,255,255,.75),
+                        0.025em 0.05em 0 rgba(255,0,255,.75);
+            animation: glitch 500ms infinite;
+        }
+
+        /* --- TERMINAL DE MENSAJE --- */
+        .terminal-container {
+            max-width: 900px;
+            margin: 0 auto 50px;
+            padding: 30px;
+            background: rgba(10, 10, 10, 0.85);
+            border: 1px solid #333;
+            border-top: 20px solid #222; /* Simulando ventana de PC vieja */
+            box-shadow: 0 0 30px rgba(0,0,0,1);
+            position: relative;
+        }
+
+        .terminal-container::before {
+            content: "● ● ●";
+            position: absolute;
+            top: -18px; left: 10px;
+            color: #555; font-size: 12px;
+        }
+
+        .terminal-header {
+            font-family: 'VT323', monospace;
+            color: var(--neon-green);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        #message-box {
+            font-family: 'VT323', monospace;
+            font-size: 1.6rem;
+            line-height: 1.4;
+            color: #efefef;
+            min-height: 300px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px; height: 20px;
+            background: var(--neon-green);
+            animation: blink 0.8s infinite;
+        }
+
+        /* --- LUCES DE JOYCE (Cyberpunk Style) --- */
+        .neon-lights {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .light {
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            filter: blur(2px);
+            animation: pulse-light 1s infinite alternate;
+        }
+
+        .l1 { background: var(--st-red); box-shadow: 0 0 20px var(--st-red); animation-delay: 0.1s; }
+        .l2 { background: var(--cyber-blue); box-shadow: 0 0 20px var(--cyber-blue); animation-delay: 0.3s; }
+        .l3 { background: var(--vhs-purple); box-shadow: 0 0 20px var(--vhs-purple); animation-delay: 0.5s; }
+        .l4 { background: var(--neon-green); box-shadow: 0 0 20px var(--neon-green); animation-delay: 0.7s; }
+
+        /* --- PLAYER MP3 --- */
+        .player-interface {
+            position: fixed;
+            bottom: 20px; right: 20px;
+            background: #111;
+            padding: 15px;
+            border-left: 5px solid var(--st-red);
+            width: 280px;
+            z-index: 1001;
+            box-shadow: -10px 10px 20px rgba(0,0,0,0.5);
+        }
+
+        .visualizer-sim {
+            display: flex;
+            gap: 3px; height: 30px; align-items: flex-end; margin-bottom: 10px;
+        }
+
+        .bar { width: 5px; background: var(--st-red); animation: bar-dance 1s infinite; }
+
+        /* --- ANIMACIONES --- */
+        @keyframes glitch {
+            0% { text-shadow: 0.05em 0 0 rgba(255,0,0,.75); }
+            14% { text-shadow: 0.05em 0 0 rgba(255,0,0,.75), -0.05em -0.025em 0 rgba(0,255,255,.75); }
+            15% { text-shadow: -0.05em -0.025em 0 rgba(0,255,255,.75), 0.025em 0.05em 0 rgba(255,0,255,.75); }
+            49% { text-shadow: -0.05em -0.025em 0 rgba(0,255,255,.75), 0.025em 0.05em 0 rgba(255,0,255,.75); }
+            50% { text-shadow: 0.025em 0.05em 0 rgba(255,0,255,.75), 0.05em 0 0 rgba(0,255,0,.75); }
+            99% { text-shadow: 0.025em 0.05em 0 rgba(255,0,255,.75), 0.05em 0 0 rgba(0,255,0,.75); }
+            100% { text-shadow: -0.025em 0 0 rgba(255,0,0,.75), -0.025em -0.025em 0 rgba(0,255,255,.75); }
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        @keyframes pulse-light {
+            from { opacity: 0.4; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes bar-dance {
+            0%, 100% { height: 5px; }
+            50% { height: 25px; }
+        }
+
+        audio { width: 100%; filter: invert(1); height: 30px; margin-top: 10px; }
+
+        .hidden { display: none !important; }
+
+        footer { text-align: center; padding: 40px; font-family: 'VT323'; color: #444; font-size: 1.2rem; }
 
     </style>
 </head>
 <body>
 
-    <!-- Fondo de Partículas (Efecto Upside Down) -->
+    <!-- Overlay Inicial -->
+    <div id="overlay">
+        <h2 style="font-family: 'Orbitron'; margin-bottom: 20px; letter-spacing: 5px; color: #fff;">ENCRYPTED FILE</h2>
+        <button class="access-btn" onclick="startExperience()">Descifrar Mensaje</button>
+        <p style="margin-top: 20px; color: #444; font-size: 0.8rem;">RECOMENDADO: USAR AURICULARES</p>
+    </div>
+
+    <div class="crt-overlay"></div>
     <div id="particles-js"></div>
 
     <header>
-        <div class="glitch-title">SYSTEM ERROR</div>
-        <div class="subtitle">HAWKINS LABS // ENCRYPTED DATA</div>
+        <h1 class="glitch">EXTRAORDINARY</h1>
+        <p style="letter-spacing: 10px; color: var(--cyber-blue);">SUBJECT: 011 // THE DARK SECTOR</p>
     </header>
 
-    <!-- Player -->
-    <div class="player-box">
-        <h4>Vocal Transmission Detected</h4>
-        <p style="font-size: 0.8rem; margin-bottom: 5px;">I Feel It Coming - The Weeknd ft. Daft Punk</p>
-        <audio id="bgMusic" controls>
+    <div class="neon-lights">
+        <div class="light l1"></div>
+        <div class="light l2"></div>
+        <div class="light l3"></div>
+        <div class="light l4"></div>
+        <div class="light l1"></div>
+        <div class="light l2"></div>
+        <div class="light l3"></div>
+        <div class="light l4"></div>
+    </div>
+
+    <main class="terminal-container">
+        <div class="terminal-header">
+            > HAWKINS_LABS_DATABASE LOGIN: OK<br>
+            > DECRYPTING_MESSAGE... COMPLETED<br>
+            > SOURCE: UNKNOWN // TARGET: YOU
+        </div>
+        <div id="message-box"></div><span class="cursor"></span>
+    </main>
+
+    <!-- Reproductor -->
+    <div class="player-interface">
+        <div class="visualizer-sim">
+            <div class="bar" style="animation-delay: 0.1s"></div>
+            <div class="bar" style="animation-delay: 0.4s"></div>
+            <div class="bar" style="animation-delay: 0.2s"></div>
+            <div class="bar" style="animation-delay: 0.6s"></div>
+            <div class="bar" style="animation-delay: 0.3s"></div>
+            <div class="bar" style="animation-delay: 0.5s"></div>
+            <div style="margin-left: 10px; font-size: 0.7rem; font-family: 'Orbitron';">I FEEL IT COMING - 1984 RMX</div>
+        </div>
+        <audio id="bgMusic" loop>
             <source src="ifeelitcoming.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
         </audio>
     </div>
 
-    <!-- Mensaje -->
-    <main class="main-container reveal">
-        <div class="text-block">
-            Quiero que te tomes un momento para leer esto y entenderlo bien: <span class="strong">eres una persona extraordinaria</span>. No lo digo por decirlo, lo digo porque lo he visto, lo he sentido y lo he comprobado. Eres increíblemente inteligente, tienes una mente ágil, analítica y capaz de resolver cosas que para otros parecen imposibles. Pero lo más impresionante no es solo tu inteligencia, sino la manera en que la usas, con humildad, con empatía y con ganas de crecer siempre un poco más.
-            <br><br>
-            Eres muy capaz de todo lo que te propongas. Cuando te enfocas en algo, lo haces con determinación, con disciplina y con esa fuerza silenciosa que te caracteriza. A veces puede que dudes de ti mismo, pero desde afuera se nota todo el potencial que tienes. Tienes talento, tienes visión y tienes esa mentalidad que distingue a las personas que realmente llegan lejos.
-            <br><br>
-            <span class="strong">Pero si algo te hace aún más grande, es tu corazón.</span> Eres una muy buena persona. De esas que no abundan. Siempre transmites alegría, haces que el ambiente sea más ligero, más positivo. Tu risa contagia, tu energía motiva, y tu forma de hablar genera confianza. Estar contigo es sentirse tranquilo, escuchado y comprendido.
-            <br><br>
-            Y quiero agradecerte de verdad. Gracias por apoyarme siempre. Gracias por estar ahí cuando más lo necesitaba, cuando tenía dudas, cuando no sabía qué decisión tomar. Tus consejos han sido importantes para mí, porque no solo hablas por hablar, sino que piensas, analizas y buscas lo mejor. Gracias por escucharme incluso cuando repetía lo mismo mil veces, por tu paciencia, por tu sinceridad y por tu lealtad. Tener a alguien como tú es un regalo que no todos tienen.
-            <br><br>
-            Nunca dejes de luchar por tus sueños. Nunca permitas que el miedo, el cansancio o las opiniones externas te hagan olvidar lo que vales. <span class="strong">Tú vas a lograr todo lo que te propongas</span>, estoy completamente seguro. El camino puede ser difícil, pero tú tienes la inteligencia para planearlo, la fuerza para recorrerlo y el corazón para disfrutarlo.
-            <br><br>
-            Confía más en ti. Cree más en tu capacidad. Recuerda que eres mucho más fuerte y mucho más capaz de lo que a veces imaginas.
-        </div>
-
-        <button class="punk-btn" onclick="document.getElementById('bgMusic').play()">Refuerzo de Energía</button>
-    </main>
-
     <footer>
-        NO MORE EXPERIMENTS // HAWKINS PA - 1984/2024
+        -- NO MORE EXPERIMENTS -- SYSTEM OVERRIDE BY PUNK_TECH --
     </footer>
 
-    <!-- Scripts para animaciones -->
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        /* Configuración de Partículas */
+        const text = `Quiero que te tomes un momento para leer esto y entenderlo bien: eres una persona extraordinaria. No lo digo por decirlo, lo digo porque lo he visto, lo he sentido y lo he comprobado. Eres increíblemente inteligente, tienes una mente ágil, analítica y capaz de resolver cosas que para otros parecen imposibles. Pero lo más impresionante no es solo tu inteligencia, sino la manera en que la usas, con humildad, con empatía y con ganas de crecer siempre un poco más.
+
+Eres muy capaz de todo lo que te propongas. Cuando te enfocas en algo, lo haces con determinación, con disciplina y con esa fuerza silenciosa que te caracteriza. A veces puede que dudes de ti mismo, pero desde afuera se nota todo el potencial que tienes. Tienes talento, tienes visión y tienes esa mentalidad que distingue a las personas que realmente llegan lejos.
+
+Pero si algo te hace aún más grande, es tu corazón. Eres una muy buena persona. De esas que no abundan. Siempre transmites alegría, haces que el ambiente sea más ligero, más positivo. Tu risa contagia, tu energía motiva, y tu forma de hablar genera confianza. Estar contigo es sentirse tranquilo, escuchado y comprendido.
+
+Y quiero agradecerte de verdad. Gracias por apoyarme siempre. Gracias por estar ahí cuando más lo necesitaba, cuando tenía dudas, cuando no sabía qué decisión tomar. Tus consejos han sido importantes para mí, porque no solo hablas por hablar, sino que piensas, analizas y buscas lo mejor. Gracias por escucharme incluso cuando repetía lo mismo mil veces, por tu paciencia, por tu sinceridad y por tu lealtad. Tener a alguien como tú es un regalo que no todos tienen.
+
+Nunca dejes de luchar por tus sueños. Nunca permitas que el miedo, el cansancio o las opiniones externas te hagan olvidar lo que vales. Tú vas a lograr todo lo que te propongas, estoy completamente seguro. El camino puede ser difícil, pero tú tienes la inteligencia para planearlo, la fuerza para recorrerlo y el corazón para disfrutarlo.
+
+Confía más en ti. Cree más en tu capacidad. Recuerda que eres mucho más fuerte y mucho más capaz de lo que a veces imaginas.`;
+
+        function typeWriter(text, i, fnCallback) {
+            if (i < text.length) {
+                document.getElementById("message-box").innerHTML = text.substring(0, i+1);
+                setTimeout(function() {
+                    typeWriter(text, i + 1, fnCallback)
+                }, 30);
+            }
+        }
+
+        function startExperience() {
+            document.getElementById('overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('overlay').classList.add('hidden');
+                document.getElementById('bgMusic').play();
+                typeWriter(text, 0);
+            }, 1000);
+        }
+
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
                 "color": { "value": "#ff0000" },
                 "shape": { "type": "circle" },
                 "opacity": { "value": 0.5, "random": true },
-                "size": { "value": 3, "random": true },
+                "size": { "value": 2, "random": true },
                 "line_linked": { "enable": false },
-                "move": { "enable": true, "speed": 1, "direction": "top", "random": true, "straight": false, "out_mode": "out" }
+                "move": { "enable": true, "speed": 1.5, "direction": "top", "random": true, "out_mode": "out" }
             }
         });
-
-        /* Animación de Revelado al hacer scroll */
-        window.addEventListener('scroll', reveal);
-        function reveal() {
-            var reveals = document.querySelectorAll('.reveal');
-            for (var i = 0; i < reveals.length; i++) {
-                var windowheight = window.innerHeight;
-                var revealtop = reveals[i].getBoundingClientRect().top;
-                var revealpoint = 150;
-                if (revealtop < windowheight - revealpoint) {
-                    reveals[i].classList.add('active');
-                }
-            }
-        }
-        // Activar la primera vez
-        reveal();
     </script>
 </body>
 </html>
