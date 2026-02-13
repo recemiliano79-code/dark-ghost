@@ -18,6 +18,13 @@
 
         body, html {
             background: var(--dark-void);
+            /* FONDO COMBINADO: Imagen de Stranger Things con capa de oscuridad */
+            background-image: 
+                linear-gradient(rgba(5, 5, 5, 0.8), rgba(5, 5, 5, 0.8)),
+                url('stranger-bg.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: #fff;
             font-family: 'Rajdhani', sans-serif;
             overflow-x: hidden;
@@ -68,16 +75,14 @@
             opacity: 0.3;
         }
 
-        /* --- ANIMACIÓN DE FONDO (UPSIDE DOWN) --- */
         #particles-js {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
         }
 
-        /* --- HEADER --- */
         header {
-            padding: 100px 20px;
+            padding: 80px 20px;
             text-align: center;
             position: relative;
         }
@@ -95,23 +100,46 @@
             animation: glitch 500ms infinite;
         }
 
-        /* --- TERMINAL DE MENSAJE --- */
+        /* --- TERMINAL CON LOGO DAFT PUNK --- */
         .terminal-container {
             max-width: 900px;
             margin: 0 auto 50px;
             padding: 30px;
-            background: rgba(10, 10, 10, 0.85);
-            border: 1px solid #333;
-            border-top: 20px solid #222; /* Simulando ventana de PC vieja */
-            box-shadow: 0 0 30px rgba(0,0,0,1);
+            background: rgba(10, 10, 10, 0.85); /* Un poco más transparente */
+            border: 1px solid #444;
+            border-top: 25px solid #222;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.2);
             position: relative;
+            backdrop-filter: blur(5px);
+        }
+
+        /* LOGO DAFT PUNK COMO SELLO */
+        .daft-logo {
+            position: absolute;
+            top: -60px;
+            right: 20px;
+            width: 120px;
+            height: 120px;
+            background-image: url('daft-punk.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            border: 3px solid var(--st-red);
+            box-shadow: 0 0 20px var(--st-red);
+            z-index: 10;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
         }
 
         .terminal-container::before {
-            content: "● ● ●";
+            content: "SYSTEM_ACCESS_GRANTED";
             position: absolute;
-            top: -18px; left: 10px;
-            color: #555; font-size: 12px;
+            top: -22px; left: 10px;
+            color: #666; font-family: 'VT323'; font-size: 14px;
         }
 
         .terminal-header {
@@ -138,7 +166,7 @@
             animation: blink 0.8s infinite;
         }
 
-        /* --- LUCES DE JOYCE (Cyberpunk Style) --- */
+        /* --- LUCES DE JOYCE --- */
         .neon-lights {
             display: flex;
             justify-content: space-around;
@@ -162,12 +190,13 @@
         .player-interface {
             position: fixed;
             bottom: 20px; right: 20px;
-            background: #111;
+            background: rgba(17, 17, 17, 0.9);
             padding: 15px;
             border-left: 5px solid var(--st-red);
             width: 280px;
             z-index: 1001;
             box-shadow: -10px 10px 20px rgba(0,0,0,0.5);
+            border: 1px solid #333;
         }
 
         .visualizer-sim {
@@ -177,40 +206,27 @@
 
         .bar { width: 5px; background: var(--st-red); animation: bar-dance 1s infinite; }
 
-        /* --- ANIMACIONES --- */
         @keyframes glitch {
             0% { text-shadow: 0.05em 0 0 rgba(255,0,0,.75); }
             14% { text-shadow: 0.05em 0 0 rgba(255,0,0,.75), -0.05em -0.025em 0 rgba(0,255,255,.75); }
             15% { text-shadow: -0.05em -0.025em 0 rgba(0,255,255,.75), 0.025em 0.05em 0 rgba(255,0,255,.75); }
             49% { text-shadow: -0.05em -0.025em 0 rgba(0,255,255,.75), 0.025em 0.05em 0 rgba(255,0,255,.75); }
             50% { text-shadow: 0.025em 0.05em 0 rgba(255,0,255,.75), 0.05em 0 0 rgba(0,255,0,.75); }
-            99% { text-shadow: 0.025em 0.05em 0 rgba(255,0,255,.75), 0.05em 0 0 rgba(0,255,0,.75); }
             100% { text-shadow: -0.025em 0 0 rgba(255,0,0,.75), -0.025em -0.025em 0 rgba(0,255,255,.75); }
         }
 
         @keyframes blink { 50% { opacity: 0; } }
-
-        @keyframes pulse-light {
-            from { opacity: 0.4; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1.2); }
-        }
-
-        @keyframes bar-dance {
-            0%, 100% { height: 5px; }
-            50% { height: 25px; }
-        }
+        @keyframes pulse-light { from { opacity: 0.4; transform: scale(0.8); } to { opacity: 1; transform: scale(1.2); } }
+        @keyframes bar-dance { 0%, 100% { height: 5px; } 50% { height: 25px; } }
 
         audio { width: 100%; filter: invert(1); height: 30px; margin-top: 10px; }
-
         .hidden { display: none !important; }
-
         footer { text-align: center; padding: 40px; font-family: 'VT323'; color: #444; font-size: 1.2rem; }
 
     </style>
 </head>
 <body>
 
-    <!-- Overlay Inicial -->
     <div id="overlay">
         <h2 style="font-family: 'Orbitron'; margin-bottom: 20px; letter-spacing: 5px; color: #fff;">ENCRYPTED FILE</h2>
         <button class="access-btn" onclick="startExperience()">Descifrar Mensaje</button>
@@ -226,17 +242,14 @@
     </header>
 
     <div class="neon-lights">
-        <div class="light l1"></div>
-        <div class="light l2"></div>
-        <div class="light l3"></div>
-        <div class="light l4"></div>
-        <div class="light l1"></div>
-        <div class="light l2"></div>
-        <div class="light l3"></div>
-        <div class="light l4"></div>
+        <div class="light l1"></div><div class="light l2"></div><div class="light l3"></div><div class="light l4"></div>
+        <div class="light l1"></div><div class="light l2"></div><div class="light l3"></div><div class="light l4"></div>
     </div>
 
     <main class="terminal-container">
+        <!-- LOGO DAFT PUNK -->
+        <div class="daft-logo"></div>
+        
         <div class="terminal-header">
             > HAWKINS_LABS_DATABASE LOGIN: OK<br>
             > DECRYPTING_MESSAGE... COMPLETED<br>
@@ -245,7 +258,6 @@
         <div id="message-box"></div><span class="cursor"></span>
     </main>
 
-    <!-- Reproductor -->
     <div class="player-interface">
         <div class="visualizer-sim">
             <div class="bar" style="animation-delay: 0.1s"></div>
@@ -254,7 +266,7 @@
             <div class="bar" style="animation-delay: 0.6s"></div>
             <div class="bar" style="animation-delay: 0.3s"></div>
             <div class="bar" style="animation-delay: 0.5s"></div>
-            <div style="margin-left: 10px; font-size: 0.7rem; font-family: 'Orbitron';">I FEEL IT COMING - 1984 RMX</div>
+            <div style="margin-left: 10px; font-size: 0.7rem; font-family: 'Orbitron';">I FEEL IT COMING - DAFT PUNK</div>
         </div>
         <audio id="bgMusic" loop>
             <source src="ifeelitcoming.mp3" type="audio/mpeg">
@@ -262,10 +274,9 @@
     </div>
 
     <footer>
-        -- NO MORE EXPERIMENTS -- SYSTEM OVERRIDE BY PUNK_TECH --
+        -- NO MORE EXPERIMENTS -- SYSTEM OVERRIDE BY DAFT_PUNK --
     </footer>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
         const text = `Quiero que te tomes un momento para leer esto y entenderlo bien: eres una persona extraordinaria. No lo digo por decirlo, lo digo porque lo he visto, lo he sentido y lo he comprobado. Eres increíblemente inteligente, tienes una mente ágil, analítica y capaz de resolver cosas que para otros parecen imposibles. Pero lo más impresionante no es solo tu inteligencia, sino la manera en que la usas, con humildad, con empatía y con ganas de crecer siempre un poco más.
@@ -312,3 +323,4 @@ Confía más en ti. Cree más en tu capacidad. Recuerda que eres mucho más fuer
     </script>
 </body>
 </html>
+```
